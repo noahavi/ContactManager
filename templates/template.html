@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Contact Manager</title>
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">
+        </head>
+        <body>
+            <header>
+                <div class="navbar navbar-inverse">
+                    <div class="navbar-inner">
+                        <a class = "brand" href="/">Contact Manager</a>
+                        <ul class = "nav">
+                            <li class="active"><a href="/">Home</a></li>
+                            <li><a href="/welcome">Welcome</a></li>
+                            <li><a href="/">pp</a></li>
+                        </ul>
+                    </div>
+                </div>
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </body>
+    </html>
