@@ -4,7 +4,7 @@
 	
 	$searchResults = "";
 	
-	// TODO: Add connection paramaters
+	// TODO: Add connection parameters
 	$conn = new mysqli();
 
 	if ($conn->connect_error) 
