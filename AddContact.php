@@ -8,7 +8,7 @@
 	$phoneNumber = $inData["phoneNumber"];
 	
 	// TODO: add connection parameters
-	$conn = new mysqli();
+	$conn = new mysqli("11.78.0.27", "contactManager", "Exceptions123?", "POOP_Project");
 
 	if ($conn->connect_error) 
 	{
