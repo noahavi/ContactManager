@@ -1,7 +1,7 @@
 <?php
 	$inData = getRequestInfo();
 	
-	$contacts = $inData["user"];
+
 	$id = $inData["id"];
 
 	$conn = new mysqli("sever, username, password");
