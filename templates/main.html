@@ -89,7 +89,7 @@
     </div>
     <ul class="nav navbar-nav">
             <button onclick="">Home</button>
-            <button onclick="openForm()">Add User</button>
+            <button onclick="openAdd()">Add User</button>
             <button onclick="openForm()">Edit User</button>
             <button onlick="logout()"> Logout</button>
     </ul>
@@ -126,6 +126,26 @@
       <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
   </div>
+  <div class="form-popup" id="Add">
+    <form action="/action_page.php" class="form-container">
+      <h1>Add contact</h1>
+  
+      <label for="first"><b>First name</b></label>
+      <input type="password" placeholder="Enter First Name" name="psw" required>
+  
+      <label for="first"><b>Last Name</b></label>
+      <input type="password" placeholder="Enter Last Name" name="psw" required>
+  
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+  
+      <label for="first"><b>Phone Number</b></label>
+      <input type="password" placeholder="Enter Phone Number" name="psw" required>
+  
+      <button type="submit" class="btn">Add Contact</button>
+      <button type="button" class="btn cancel" onclick="closeAdd()">Close</button>
+    </form>
+    </div>
   
   <script>
   function openForm() {
@@ -134,6 +154,13 @@
   
   function closeForm() {
     document.getElementById("myForm").style.display = "none";
+  }
+  function openAdd() {
+    document.getElementById("Add").style.display = "block";
+  }
+  
+  function closeAdd() {
+    document.getElementById("Add").style.display = "none";
   }
   </script>
 
