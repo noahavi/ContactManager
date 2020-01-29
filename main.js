@@ -4,12 +4,12 @@
 
 class Contact
 {
-    constructor(firstName, lastName, num, email)
+    constructor(firstName, lastName, email, phone)
     {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.num = num;
         this.email = email;
+        this.phone = phone;
     }
 }
 
@@ -18,49 +18,78 @@ class Display
     static showContacts()
     {
         // test info
-        const storedContacts = [
+        var storedContacts =
             {
                 firstName : 'Noah',
                 lastName : 'Avizemer',
-                num : '123-1234',
-                email : 'noahavizemer@gmail.com'
+                email : 'noahavizemer@gmail.com',
+                phone : '561-512-5983'
             }
-        ]
-
-        const contacts = storedContacts;
-        contacts.forEach((contact) => Display.displayContact(contact));
+        console.log(storedContacts.firstName);
+        Display.listContact(storedContacts);
     }
 
-    static displayContact(contact)
+    static delete(element)
+    {
+        if (element.classList.contains('delete'))
+        {
+            element.parentElement.parentElement.remove();
+        }
+    }
+
+    static clearFields() 
+    {
+        document.querySelector('#firstName').value = '';
+        document.querySelector('#lastName').value = '';
+        document.querySelector('#email').value = '';
+        document.querySelector('#phone').value = '';
+    }
+
+    static listContact(contact)
     {
         const table = document.querySelector('#contact-list');
         const row = document.createElement('tr');
 
+        console.log(contact.firstName);
         row.innerHTML = `
-        <td>${Contact.firstName}</td>
-        <td>${Contact.lastName}</td>
-        <td>${Contact.num}</td>
-        <td>${Contact.email}</td>
-        <td><a href="#" class = "btn-cancel">Delete</a></td>
+        <td>${contact.firstName}</td>
+        <td>${contact.lastName}</td>
+        <td>${contact.email}</td>
+        <td>${contact.phone}</td>
+        <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
         `;
-
-        list.appendChild(row);
+        table.appendChild(row);
     }
 }
 
 // Display contact
-document.addEventListener('DOMContentLoaded', Display.displayContact);
+document.addEventListener('DOMContentLoaded', Display.listContact);
 
-// Add contact
-document.querySelector('#Add').addEventListener('submit', (e)
-=> {
-    e.preventDefault();
+var e1 = document.querySelector('#contact-form');
 
-    const firstName = document.querySelector('#first').value;
-    const lastName = document.querySelector('#last').value;
-    const email = document.querySelector('#email').value;
-    const number = document.querySelector('#number').value;
+if (e1)
+{
+    e1.addEventListener('submit', (e) => {
+        // Prevent actual submit
+        e.preventDefault();
+    
+        const firstName = document.querySelector('#fname').value;
+        const lastName = document.querySelector('#lname').value;
+        const email = document.querySelector('#email').value;
+        const number = document.querySelector('#phone').value;
+        
+        const contact = new Contact(firstName, lastName, email, number);
+    
+        Display.listContact(contact);
+        clearFields();
+       
+      });
+}
 
-    const contact = new Contact(firstName, lastName, email, number);
-    console.log(contact);
-});
+var e2 = document.querySelector('#contact-list');
+if (e2)
+{
+    e2.addEventListener('click', (e) => {
+        Display.delete(e);
+    });
+}
