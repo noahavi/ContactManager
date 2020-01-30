@@ -93,3 +93,47 @@ if (e2)
         Display.delete(e);
     });
 }
+
+// need to add some stuff
+function searchContact()
+{
+	var lookup = document.getelemtbyId("searchText").value;
+	document.getElementbyId("userSearchResult").innerHTML = "";
+
+	var nameList = "";
+
+	var jsonPayload = '{"search" : "' + lookup + '","userId" : ' + userId + '}';
+	var url = API_URL HERE // NEED TO ADD THE API URL HERE
+
+	var request = new XMLHttpRequest();
+	request.open("POST", url, true);
+	request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try
+	{
+		request.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
+				var jsonObject = JSON.parse( request.responseText );
+				
+				for( var i=0; i<jsonObject.results.length; i++ )
+				{
+					nameList += jsonObject.results[i];
+					if( i < jsonObject.results.length - 1 )
+					{
+						nameList += "<br />\r\n";
+					}
+				}
+				
+				document.getElementsByTagName("p")[0].innerHTML = nameList;
+			}
+		};
+		request.send(jsonPayload);		
+	}
+	catch(err)
+	{
+		document.getElementById("colorSearchResult").innerHTML = err.message;
+	}
+}
