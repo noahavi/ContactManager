@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+    <title>Contact Manager</title>
+</head>
+
+<div class="container mt-4">
+    <h1 class="display-4 text-center">
+      <i class="fas fa-book-open text-primary"></i> My<span class="text-primary">Contact</span>Manager</h1>
+      <table class="table table-striped mt-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>123-123-1234</td>
+            <td>test@gmail.com</td>
+            <td><button type="button" class="btn btn-secondary">Edit</button></td>
+            <td><button type="button" class="btn btn-secondary">Delete</button></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>123-123-1234</td>
+            <td>bubba@gmail.com</td>
+            <td><button type="button" class="btn btn-dark">Edit</button></td>
+            <td><button type="button" class="btn btn-dark">Delete</button></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>123-123-1234</td>
+            <td>culChemical@pp.com</td>
+            <td><button type="button" class="btn btn-secondary">Edit</button></td>
+            <td><button type="button" class="btn btn-secondary">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">First Name</label>
+          <input type="text" id="fname" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="name">Last Name</label>
+          <input type="text" id="lname" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="Phone">Phone Number</label>
+            <input type="text" id="phone" class="form-control">
+          </div>
+        <input type="submit" value="Add Contact" class="btn btn-primary btn-block">
+      </form>
+
+  </div>
+  <script src="/main.js"></script>
+  </html>
