@@ -2,138 +2,93 @@
 // Events: Show contacts, add, delete, search, create
 // WORK IN PROGRESS: just setting things up
 
-class Contact
-{
-    constructor(firstName, lastName, email, phone)
+var urlBase = 'basicapp.us/API';
+var extension = 'php';
+
+var userId = 0;
+var firstName = "";
+var lastName = "";
+
+document.addEventListener('DOMContentLoaded', showContacts());
+
+function remove(element)
+ {
+    if (element.classList.contains('delete'))
     {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
+        element.parentElement.parentElement.remove();
     }
 }
 
-class Display
+function showContacts()
 {
-    static showContacts()
-    {
-        // test info
-        var storedContacts =
-            {
-                firstName : 'Noah',
-                lastName : 'Avizemer',
-                email : 'noahavizemer@gmail.com',
-                phone : '561-512-5983'
-            }
-        console.log(storedContacts.firstName);
-        Display.listContact(storedContacts);
-    }
+    var url = urlBase + '/GetAllUserContacts' + extension;
 
-    static delete(element)
-    {
-        if (element.classList.contains('delete'))
-        {
-            element.parentElement.parentElement.remove();
-        }
-    }
+    const table = document.querySelector('#contact-list');
+    const row = document.createElement('tr');
 
-    static clearFields() 
-    {
-        document.querySelector('#firstName').value = '';
-        document.querySelector('#lastName').value = '';
-        document.querySelector('#email').value = '';
-        document.querySelector('#phone').value = '';
-    }
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-    static listContact(contact)
-    {
-        const table = document.querySelector('#contact-list');
-        const row = document.createElement('tr');
 
-        console.log(contact.firstName);
-        row.innerHTML = `
-        <td>${contact.firstName}</td>
-        <td>${contact.lastName}</td>
-        <td>${contact.email}</td>
-        <td>${contact.phone}</td>
-        <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
-        `;
-        table.appendChild(row);
-    }
 }
 
-// Display contact
-document.addEventListener('DOMContentLoaded', Display.listContact);
-
-var e1 = document.querySelector('#contact-form');
-
-if (e1)
+function clearFields() 
 {
-    e1.addEventListener('submit', (e) => {
-        // Prevent actual submit
-        e.preventDefault();
-    
-        const firstName = document.querySelector('#fname').value;
-        const lastName = document.querySelector('#lname').value;
-        const email = document.querySelector('#email').value;
-        const number = document.querySelector('#phone').value;
-        
-        const contact = new Contact(firstName, lastName, email, number);
-    
-        Display.listContact(contact);
-        clearFields();
-       
-      });
+    document.querySelector('#firstName').value = '';
+    document.querySelector('#lastName').value = '';
+    document.querySelector('#email').value = '';
+    document.querySelector('#phone').value = '';
 }
 
-var e2 = document.querySelector('#contact-list');
-if (e2)
+function listContact(contact)
 {
-    e2.addEventListener('click', (e) => {
-        Display.delete(e);
-    });
+    const table = document.querySelector('#contact-list');
+    const row = document.createElement('tr');
+    var c = JSON.parse(contact);
+
+    row.innerHTML = `
+    <td>${c.firstName}</td>
+    <td>${c.lastName}</td>
+    <td>${c.email}</td>
+    <td>${c.phone}</td>
+    <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+    `;
+    table.appendChild(row);
 }
 
-// need to add some stuff
-function searchContact()
+function addContact()
 {
-	var lookup = document.getelemtbyId("searchText").value;
-	document.getElementbyId("userSearchResult").innerHTML = "";
+    var firstName = document.querySelector("#firstName").value;
+    var lastName = document.querySelector("#lastName").value;
+    var email = document.querySelector("#email").value;
+    var phone = document.querySelector("#phone").value;
 
-	var nameList = "";
+    document.getElementById("addResult").innerHTML = "";
 
-	var jsonPayload = '{"search" : "' + lookup + '","userId" : ' + userId + '}';
-	var url = API_URL HERE // NEED TO ADD THE API URL HERE
+    var url = urlBase + '/AddContact' + extension;
+    var jsonPayload = '{"firstName" : "' + firstName + '", "userId" : ' + userId + "," + '"lastName" : "' + lastName + '", ' + 
+                        '"email" : "'+ email +'", "phone" : '+ phone + '}';
 
-	var request = new XMLHttpRequest();
-	request.open("POST", url, true);
-	request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-	try
+    try
 	{
-		request.onreadystatechange = function() 
+		xhr.onreadystatechange = function() 
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
-				var jsonObject = JSON.parse( request.responseText );
-				
-				for( var i=0; i<jsonObject.results.length; i++ )
-				{
-					nameList += jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
-					{
-						nameList += "<br />\r\n";
-					}
-				}
-				
-				document.getElementsByTagName("p")[0].innerHTML = nameList;
+				document.getElementById("addResult").innerHTML = "Contact has been added";
 			}
-		};
-		request.send(jsonPayload);		
+        };
+        //xhr.send(jsonPayload);
+        listContact(jsonPayload);
+        clearFields();
 	}
 	catch(err)
 	{
-		document.getElementById("colorSearchResult").innerHTML = err.message;
+		document.getElementById("addResult").innerHTML = err.message;
 	}
 }
