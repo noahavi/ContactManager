@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
+    <script src="/main.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
     <title>Contact Manager</title>
 </head>
-
 <div class="container mt-4">
     <h1 class="display-4 text-center">
       <i class="fas fa-book-open text-primary"></i> My<span class="text-primary">Contact</span>Manager</h1>
+      <form id="contact-form">
+        <div class="form-group">
+          <input type="submit" value="Search Contact" class="btn btn-primary btn-block">
+          <label for="name"></label>
+          <input type="text" id="fname" class="form-control">
+      </form>
+      
       <table class="table table-striped mt-5">
         <thead>
           <tr>
@@ -74,5 +81,4 @@
       </form>
 
   </div>
-  <script src="/main.js"></script>
   </html>
