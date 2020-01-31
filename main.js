@@ -27,8 +27,18 @@ function showContacts()
     const row = document.createElement('tr');
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+     
+    xhr.onload = function()
+    {
+        var contacts = JSON.parse(this.response);
+
+        contacts.forEach(contact => 
+        {
+            // need to display contacts in table now
+        })
+    }
 
 
 }
