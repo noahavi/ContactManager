@@ -123,3 +123,44 @@ function doLogout()
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 	window.location.href = "login.html";
 }
+
+function searchContact()
+{
+	var removing = document.getElementById("firstName").value;
+	document.getElementById("searchResult").innerHTML = "";
+	var contactList = "";
+	var jsonPayload = '{"userID": ' + userID + '"searchText": ' + removing + '}';
+	var api_url = "basicapp.us/SearchContacts.php"
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				document.getElementById("searchResult").innerHTML = "Contact(s) has been retrieved";
+				var jsonObject = JSON.parse( xhr.responseText );
+				
+				for( var i=0; i<jsonObject.results.length; i++ )
+				{
+					contactList += jsonObject.results[i];
+					if( i < jsonObject.results.length - 1 )
+					{
+						contactList += "<br />\r\n";
+					}
+				}
+				
+				document.getElementsByTagName("p")[0].innerHTML = contactList;
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("searchResult").innerHTML = err.message;
+	}
+}
