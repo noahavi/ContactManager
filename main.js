@@ -21,23 +21,36 @@ function remove(element)
 
 function showContacts()
 {
-    var url = urlBase + '/GetAllUserContacts' + extension;
+    var url = urlBase + '/GetAllUserContacts.' + extension;
+    var jsonPayload = '{"userID" : ' + userId + '}';
+    var contactList = "";
 
     const table = document.querySelector('#contact-list');
     const row = document.createElement('tr');
-
+    
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
+    xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
      
-    xhr.onload = function()
+    xhr.onreadystatechange = function()
     {
-        var contacts = JSON.parse(this.response);
-
-        contacts.forEach(contact => 
+        if (this.readyState == 4 && this.status == 200) 
         {
-            // need to display contacts in table now
-        })
+            var jsonObject = JSON.parse( xhr.responseText );
+            
+            for( var i=0; i<jsonObject.results.length; i++ )
+            {
+                contactList += jsonObject.results[i];
+                if( i < jsonObject.results.length - 1 )
+                {
+                    contactList += "<th />\r\n";
+                }
+            }
+            
+            document.getElementsByTagName("tbody")[1].innerHTML = contactList;
+        }
+
+        xhr.send(jsonPayload);
     }
 
 
@@ -76,9 +89,9 @@ function addContact()
 
     document.getElementById("addResult").innerHTML = "";
 
-    var url = urlBase + '/AddContact' + extension;
-    var jsonPayload = '{"firstName" : "' + firstName + '", "userId" : ' + userId + "," + '"lastName" : "' + lastName + '", ' + 
-                        '"email" : "'+ email +'", "phone" : '+ phone + '}';
+    var url = urlBase + '/AddContact.' + extension;
+    var jsonPayload = '{"firstName" : "' + firstName + '", "userID" : ' + userId + "," + '"lastName" : "' + lastName + '", ' + 
+                        '"emailAddress" : "'+ email +'", "phoneNumber" : '+ phone + '}';
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -93,12 +106,20 @@ function addContact()
 				document.getElementById("addResult").innerHTML = "Contact has been added";
 			}
         };
-        //xhr.send(jsonPayload);
-        listContact(jsonPayload);
+        xhr.send(jsonPayload);
         clearFields();
 	}
 	catch(err)
 	{
 		document.getElementById("addResult").innerHTML = err.message;
 	}
+}
+
+function doLogout()
+{
+    userId = 0;
+	firstName = "";
+	lastName = "";
+	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+	window.location.href = "login.html";
 }
