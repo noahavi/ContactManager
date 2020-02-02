@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="scripts/code.js"></script>
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/form.css">
+    <link rel="icon" type="image/png" href="images/phone-book.png">
+    <title>Contact Manager</title>
+</head>
+<body onload="getContacts();">
+  <div style="position: absolute; top:0; right:0;;" class = "btn-group">
+    <p><input type="button" style ="background-color: #375a7f; color: white; border-color: #375a7f;" value="Home" class="button"               onclick="returnToHome();"></p>
+    <p><input type="button" style ="background-color: #375a7f;border-color: #375a7f; color: white;" value="Logout" class="button"             onclick="doLogout();"></p>
+  </div>
+<div class="container mt-4">
+    <h1 class="display-4 text-center">
+      <i class="fas fa-book-open text-primary"></i> My<span class="text-primary">Contact</span>Manager</h1>
+      <form id="search-form">
+        <div class="form-group">
+          <label for="name"></label>
+          <input type="text" id="searchText" class="form-control">
+          <input type="button" value="Search" class="btn btn-primary btn-block" onclick="searchContacts();">
+          <span id="searchResult"></span>
+        </div>
+      </form>   
+
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">First Name</label>
+          <input type="text" id="firstName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="name">Last Name</label>
+          <input type="text" id="lastName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="Phone">Phone Number</label>
+            <input type="text" id="phone" class="form-control">
+          </div>
+        <input type="button" value="Add Contact" class="btn btn-primary btn-block" onclick="addContact();">
+        <span id="addResult"></span>
+      </form>
+      <table class="table table-striped mt-5" id="contactList">
+          <thead>
+              <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+              </tr>
+          </thead>
+        <tbody id="tablebody"></tbody>
+      </table>
+  </div>
+  <div class="form-popup" id="myForm">
+  <form class="form-container">
+    <h1>Edit Contact</h1>
+
+    <label for="First Name"><b>First Name</b></label>
+    <input type="text" placeholder="Enter First Name" id="editfirst" name="firstname">
+    
+    <label for="Last Name"><b>Last Name</b></label>
+    <input type="text" placeholder="Enter Last Name" id="editlast" name="lastname">
+    
+    <label for="Email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email Address" id="editemail" name="email">
+
+    <label for="Phone Number"><b>Phone Number</b></label>
+    <input type="text" placeholder="Enter Phone Number" id="editphone" name="phone">
+
+    <button type="button" class="btn" id="form-submit">Submit</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+</body>
+</html>
